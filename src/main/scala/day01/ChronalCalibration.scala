@@ -1,22 +1,19 @@
 package day01
 
-import scala.io.Source
+import common.puzzleInput
 
 object ChronalCalibration extends App {
 
-  val bufferedSource = Source.fromResource("day01.txt")
-  val iter: Iterator[String] = bufferedSource.getLines
-  val frequencies: Iterator[Int] = iter.map(_.toInt)
+  val frequencies: List[Int] = puzzleInput("day01.txt").map(_.toInt)
 
   // Part 1
-  def resultingFrequency(input: Iterator[Int]): Int = {
+  def resultingFrequency(input: List[Int]): Int = {
     input.sum
   }
 
   // Part 2
-  def repeatingFrequency(input: Iterator[Int]): Int = {
-
-    val cycleInput = Iterator.continually(input.toList).flatten
+  def repeatingFrequency(input: List[Int]): Int = {
+    val cycleInput = Iterator.continually(input).flatten
     val accumulator: Iterator[Int] = cycleInput
       .scanLeft(0)(_ + _)
       .drop(1)
@@ -33,5 +30,4 @@ object ChronalCalibration extends App {
 
   println(s"Resulting frequency: ${resultingFrequency(frequencies)}")
   println(repeatingFrequency(frequencies))
-  bufferedSource.close()
 }
